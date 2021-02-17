@@ -18,17 +18,16 @@ const fileName = path.dirname(fs.realpathSync(__filename));
 
 if (args.length > 2) {
     objEnv = args[2];
-    var isCache = args[3]; // Flag for memcache activate/deactivate
 
-	if (objEnv === "prod") {
-		dotenv.config({ path: path.join(fileName, "./config/prod.env") });
-	}
-	else {
-		dotenv.config({ path: path.join(fileName, "./config/dev.env") });
-	}
+    if (objEnv === "prod") {
+        dotenv.config({ path: path.join(fileName, "./config/prod.env") });
+    }
+    else {
+        dotenv.config({ path: path.join(fileName, "./config/dev.env") });
+    }
 }
 else {
-  dotenv.config({ path: path.join(fileName, "./config/dev.env") });
+    dotenv.config({ path: path.join(fileName, "./config/dev.env") });
 }
 
 //Incoming Request Parser
@@ -37,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //Index Request Controller
 app.get("/", function (req, res) {
-	console.log("Index Controller at " + (new Date()));
+    console.log("Index Controller at " + (new Date()));
 
 	var varResponse = "<html><head></head><body><h1>It works!</h1></body></html>";
 	res.writeHead(200, {"Content-Type": "text/html"});
@@ -65,10 +64,10 @@ function doMMGeoIP2Bot (req, res) {
             return;
         }
 
-        //Get IP from the Request
-        var varIP = req.ipaddress;
+        //Get IPAddress from the Request
+        var varIP = req.query.ipaddress;    //Try to get it from Query String
         if (util.isBlank(varIP)) {
-            varIP = req.body.ipaddress;
+            varIP = req.body.ipaddress;     //Try to get it from Request Body
         }
 
         if (util.isBlank(varIP)) {
