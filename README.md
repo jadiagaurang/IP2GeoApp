@@ -24,14 +24,6 @@ curl --location --request POST "http://localhost:8080/v1/geoip" --header 'Conten
 }'
 ```
 
-## Tests
-
-Coming Soon!
-
-## Contributors
-
-Gaurang Jadia
-
 ## License
 
 [Unlicense](https://unlicense.org/)
