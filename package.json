@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@maxmind/geoip2-node": "^2.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ip6addr": "^0.2.3",
+    "memcached": "^2.2.2",
+    "uuid": "^8.3.2"
+  }
+}
