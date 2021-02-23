@@ -23,7 +23,7 @@ npm start
 
 ### Local
 ```
-nodemon ./server/app.js
+nodemon app.js
 ```
 
 ## API Reference
