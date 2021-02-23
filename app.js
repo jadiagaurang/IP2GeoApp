@@ -20,8 +20,8 @@ const fileName = path.dirname(fs.realpathSync(__filename));
 
 // Work on the Args
 if (args.length > 2) {
-    objEnv = args[2];
-
+    var objEnv = args[2];
+    
     if (objEnv === "prod") {
         dotenv.config({ path: path.join(fileName, "./config/prod.env") });
     }
@@ -84,3 +84,5 @@ app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
 });
+
+module.exports = server

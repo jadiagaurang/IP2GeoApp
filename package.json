@@ -4,7 +4,9 @@
   "description": "An Application to get geographic data from an IP Address",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "dev": "nodemon app",
+    "start": "node app",
+    "test": "mocha tests/*.js --exit"
   },
   "dependencies": {
     "@maxmind/geoip2-node": "^2.2.0",
@@ -35,5 +37,9 @@
     "name": "Gaurang Jadia"
   },
   "private": false,
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "mocha": "^8.3.0",
+    "supertest": "^6.1.3"
+  }
 }
