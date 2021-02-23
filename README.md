@@ -1,4 +1,4 @@
-# MaxMind GeoIP2 DB API Endpoint using NodeJS + Express
+# MaxMind GeoIP2 DB App using NodeJS + Express
 
 ## Description
 
@@ -12,6 +12,12 @@ npm install
 
 ## Code Example
 
+### Prod
+```
+npm start
+```
+
+### Local
 ```
 nodemon ./server/app.js
 ```
@@ -19,11 +25,11 @@ nodemon ./server/app.js
 ## API Reference
 
 ```
-curl --location --request GET "http://localhost:8080/v1/geoip?ipaddress=8.8.4.4"
+curl --location --request GET "http://localhost:8080/api/geoip?ipaddress=8.8.4.4"
 ```
 
 ```
-curl --location --request POST "http://localhost:8080/v1/geoip" --header 'Content-Type: application/json' --data-raw '{
+curl --location --request POST "http://localhost:8080/api/geoip" --header 'Content-Type: application/json' --data-raw '{
     "ipaddress": "1.1.1.1"
 }'
 ```
