@@ -1,54 +1,17 @@
-const fs = require("fs");
-const http = require("http");
-const path = require("path");
+﻿'use strict';
+var express = require('express');
+var router = express.Router();
+
 const ip6addr = require("ip6addr");
-
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
-
-const dotenv = require("dotenv");
-
 const MMGeoIP2Bot = require("../src/geoip.js");
 const util = require("../src/utility.js");
 
-//Load Environment Variables from the Config File
-const args = process.argv;
-const fileName = path.dirname(fs.realpathSync(__filename));
-
-if (args.length > 2) {
-    objEnv = args[2];
-
-    if (objEnv === "prod") {
-        dotenv.config({ path: path.join(fileName, "./config/prod.env") });
-    }
-    else {
-        dotenv.config({ path: path.join(fileName, "./config/dev.env") });
-    }
-}
-else {
-    dotenv.config({ path: path.join(fileName, "./config/dev.env") });
-}
-
-//Incoming Request Parser
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-//Index Request Controller
-app.get("/", function (req, res) {
-    console.log("Index Controller at " + (new Date()));
-
-	var varResponse = "<html><head></head><body><h1>It works!</h1></body></html>";
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write(varResponse);
-	res.end();
-});
-
-//GeoIPBot Controller for GET + POST
-app.get("/v1/geoip", function (req, res) {
+/* GET */
+router.get("/geoip", function (req, res) {
 	doMMGeoIP2Bot(req, res);
 });
-app.post("/v1/geoip", function (req, res) {
+/* POST */
+router.post("/geoip", function (req, res) {
 	doMMGeoIP2Bot(req, res);
 });
 
@@ -163,13 +126,4 @@ function doMMGeoIP2Bot (req, res) {
     }
 }
 
-//***** Start the Engines Here *****//
-//Listen Incoming Request on Port 80 or Config Port
-var port = process.env.SERVER_PORT;
-if (util.isBlank(port)) {
-	port = 80;
-}
-//Start the App on Unsecure Port
-http.createServer(app).listen(port, () => {
-	console.log("Starting MMGeoIP2Bot on Port #" + port + " at " + (new Date()));
-});
+module.exports = router;

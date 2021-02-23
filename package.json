@@ -4,28 +4,36 @@
   "description": "An Application to get geographic data from an IP Address",
   "main": "app.js",
   "scripts": {
-    "start": "node ./server/app.js"
+    "start": "node app"
   },
   "dependencies": {
     "@maxmind/geoip2-node": "^2.2.0",
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.0",
+    "debug": "^2.2.0",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "ip6addr": "^0.2.3",
     "memcached": "^2.2.2",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.0",
     "uuid": "^8.3.2"
   },
   "engines": {
-    "node": "14.15.4"
+    "node": "14.15.5"
   },
   "keywords": [
     "MaxMind",
     "GeoIP",
-	"GeoIP2",
-	"IPInfo",
-	"GeoLite2",
-	"Free"
+    "GeoIP2",
+    "IPInfo",
+    "GeoLite2",
+    "Free"
   ],
-  "author": "Gaurang Jadia",
+  "author": {
+    "name": "Gaurang Jadia"
+  },
   "private": false,
   "license": "UNLICENSED"
 }

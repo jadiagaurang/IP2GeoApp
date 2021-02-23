@@ -1,3 +1,4 @@
+'use strict';
 const Memcached = require("memcached");
 
 //START: Utility Functions
