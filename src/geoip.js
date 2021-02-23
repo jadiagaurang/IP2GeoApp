@@ -1,4 +1,5 @@
 'use strict';
+const debug = require('debug');
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
@@ -15,8 +16,6 @@ module.exports = class MMGeoIP2Bot {
 
   	async getASN() {
 		return new Promise((resolve, reject) => {
-			console.log("MMGeoIP2Bot - getASN : " + this.IPAddress + " at " + (new Date()));
-
 			let dbASN = path.join(path.dirname(fs.realpathSync(__filename)), "../db/GeoLite2-ASN.mmdb");
 			Reader.open(dbASN).then(reader => {
 				try {
@@ -27,9 +26,8 @@ module.exports = class MMGeoIP2Bot {
 					console.error(ex);
 					reject(ex);
 				}
-			}).catch(function(rej) {
-				//here when you reject the promise
-				console.log(rej);
+			}).catch(function(ex) {
+				debug(ex);
 				reject(ex);
 			});
 		});
@@ -37,8 +35,6 @@ module.exports = class MMGeoIP2Bot {
 
 	async getCity() {
 		return new Promise((resolve, reject) => {
-			console.log("MMGeoIP2Bot - getCity : " + this.IPAddress + " at " + (new Date()));
-
 			let dbCity = path.join(path.dirname(fs.realpathSync(__filename)), "../db/GeoLite2-City.mmdb");
 			Reader.open(dbCity).then(reader => {
 				try {
@@ -49,40 +45,29 @@ module.exports = class MMGeoIP2Bot {
 					console.error(ex);
 					reject(ex);
 				}
-			}).catch(function(rej) {
-				//here when you reject the promise
-				console.log(rej);
+			}).catch(function(ex) {
+				debug(ex);
 				reject(ex);
 			});
 		});
 	}
 
 	async getCountry() {
-		return new Promise((resolve, reject) => {
-			console.log("MMGeoIP2Bot - getCountry : " + this.IPAddress + " at " + (new Date()));
-			
+		return new Promise((resolve, reject) => {			
 			let dbCountry = path.join(path.dirname(fs.realpathSync(__filename)), "../db/GeoLite2-Country.mmdb");
 			Reader.open(dbCountry).then(reader => {
 				try {
 					const response = reader.country(this.IPAddress);
-					console.log(response);
 					resolve(response);
 				}
 				catch (ex) {
 					console.error(ex);
 					reject(ex);
 				}
-			}).catch(function(rej) {
-				//here when you reject the promise
-				console.log(rej);
+			}).catch(function(ex) {
+				debug(ex);
 				reject(ex);
 			});
-		});
-	}
-	  
-	delay(timeout) {
-		return new Promise((resolve) => {
-			setTimeout(resolve, timeout);
 		});
 	}
 }

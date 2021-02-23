@@ -1,16 +1,16 @@
 ﻿'use strict';
-var debug = require('debug');
-var dotenv = require("dotenv");
-var express = require('express');
-var fs = require("fs");
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const debug = require('debug');
+const dotenv = require("dotenv");
+const express = require('express');
+const fs = require("fs");
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var geoip = require('./routes/geoip');
+const routes = require('./routes/index');
+const geoip = require('./routes/geoip');
 
 var app = express();
 

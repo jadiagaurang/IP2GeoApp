@@ -4,7 +4,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index', { title: 'Convert IP Address to Geo' });
+    res.render('index', { 
+        title: 'Convert IP Address to Geolocation Data'
+    });
 });
 
 module.exports = router;

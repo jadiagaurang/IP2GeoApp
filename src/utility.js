@@ -75,5 +75,11 @@ module.exports = class Utility {
 			}
 		});
 	}
+
+	delay(timeout) {
+		return new Promise((resolve) => {
+			setTimeout(resolve, timeout);
+		});
+	}
 }
 //END: Utility Functions
