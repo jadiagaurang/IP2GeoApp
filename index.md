@@ -1,37 +1,46 @@
-## Welcome to GitHub Pages
+# MaxMind GeoIP2 DB App using NodeJS + Express
 
-You can use the [editor on GitHub](https://github.com/jadiagaurang/mmdb-geoip-node-express/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+[![Node.js CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml)
+[![Build Status](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express.svg?branch=main)](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This example provides an API for the MaxMind's free [GeoLite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
-### Markdown
+### Search
+![Search](https://user-images.githubusercontent.com/430637/108790309-38b27980-7531-11eb-90b3-b879ca779f3b.png)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Result
+![Result](https://user-images.githubusercontent.com/430637/108790308-3819e300-7531-11eb-9845-d6dff15c6ffd.png)
 
-```markdown
-Syntax highlighted code block
+## Installation
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+npm install
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Code Example
 
-### Jekyll Themes
+### Prod
+```
+npm start
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jadiagaurang/mmdb-geoip-node-express/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Local
+```
+nodemon app.js
+```
 
-### Support or Contact
+## API Reference
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+```
+curl --location --request GET "http://localhost:8080/api/geoip?ipaddress=8.8.4.4"
+```
+
+```
+curl --location --request POST "http://localhost:8080/api/geoip" --header 'Content-Type: application/json' --data-raw '{
+    "ipaddress": "1.1.1.1"
+}'
+```
+
+## License
+
+[Unlicense](https://unlicense.org/)
