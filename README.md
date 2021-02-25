@@ -1,7 +1,9 @@
 # MaxMind GeoIP2 DB App using NodeJS + Express
 
-[![Node.js CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml)
 [![Build Status](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express.svg?branch=main)](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express)
+[![Node.js CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml)
+[![Docker Image CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml)
+[![Docker pulls](https://img.shields.io/docker/pulls/jadiagaurang/mmdb-geoip-node-express.svg?logo=docker)](https://hub.docker.com/r/jadiagaurang/mmdb-geoip-node-express/)
 
 This example provides an API for the MaxMind's free [GeoLite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
