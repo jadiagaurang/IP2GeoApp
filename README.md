@@ -45,4 +45,4 @@ curl --location --request POST "http://localhost:8080/api/geoip" --header 'Conte
 
 ## License
 
-[Unlicense](https://unlicense.org/)
+Please see the [license file](https://github.com/jadiagaurang/mmdb-geoip-node-express/blob/main/LICENSE) for more information.
