@@ -116,7 +116,7 @@ body > .container {
     margin-top: 20px;
 }
 
-pre, code {
-  font-size: 80%;
+.mapWrapper {
+  width: 100%;
   height: calc(100vh - 278px);
 }
