@@ -101,7 +101,7 @@ const httpsOptions = {
 const server = https.createServer(app);
 */
 
-const server = http.createServer(httpsOptions, app);
+const server = http.createServer(app);
 
 // Health Check
 const onSignal = () => {
