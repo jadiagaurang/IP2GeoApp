@@ -23,6 +23,8 @@ IP2Geo is an open-source app to get the Geolocation (Latitude and Longitude) fro
 ```base
 npm install
 npm update
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout security/private.key -out security/primary.crt -config security/csr.cnf -sha256
 ```
 
 ## Code Example

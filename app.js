@@ -4,6 +4,7 @@
 const debug = require("debug");
 const dotenv = require("dotenv");
 const http = require("http");
+const https = require("https");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -89,7 +90,18 @@ app.use(function (err, req, res, next) {
 // Port Setup fallback to 3000
 app.set("port", process.env.PORT || 3000);
 
-const server = http.createServer(app)
+/*
+// HttpOptions to accept https connections!
+const httpsOptions = {
+    key: fs.readFileSync(path.join(path.dirname(fs.realpathSync(__filename)), "./security/private.key")),
+    cert: fs.readFileSync(path.join(path.dirname(fs.realpathSync(__filename)), "./security/primary.crt")),
+    requestCert: false,
+    rejectUnauthorized: false
+}
+const server = https.createServer(app);
+*/
+
+const server = http.createServer(httpsOptions, app);
 
 // Health Check
 const onSignal = () => {
