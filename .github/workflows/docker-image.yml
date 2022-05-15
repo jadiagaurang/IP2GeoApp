@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: jadiagaurang/mmdb-geoip-node-express:latest
+          tags: jadiagaurang/ip2geo-app:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

@@ -1,48 +1,63 @@
-# MaxMind GeoIP2 DB App using NodeJS + Express
+# IP2GeoApp
 
 [![Build Status](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express.svg?branch=main)](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express)
 [![Node.js CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml)
 [![Docker Image CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml)
 [![Docker pulls](https://img.shields.io/docker/pulls/jadiagaurang/mmdb-geoip-node-express.svg?logo=docker)](https://hub.docker.com/r/jadiagaurang/mmdb-geoip-node-express/)
 
-This example provides an API for the MaxMind's free [GeoLite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+IP2Geo is an open-source app to get the Geolocation (Latitude and Longitude) from an IP Address using MaxMind's free [GeoLite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
-### Search
-![Search](https://user-images.githubusercontent.com/430637/108790309-38b27980-7531-11eb-90b3-b879ca779f3b.png)
+## Motivation
 
-### Result
-![Result](https://user-images.githubusercontent.com/430637/108790308-3819e300-7531-11eb-9845-d6dff15c6ffd.png)
+* [https://www.maxmind.com/en/geoip-demo](https://www.maxmind.com/en/geoip-demo)
+* [https://ipinfo.io/](https://ipinfo.io/)
+* [https://ipgeolocation.io/](https://ipgeolocation.io/)
+* [https://www.ip2geo.co/](https://www.ip2geo.co/)
+* [https://www.geolocation.com/](https://www.geolocation.com/)
+
+## Demo
+
+[https://ip2geoapp.com/](https://ip2geoapp.com/)
 
 ## Installation
 
-```
+```base
 npm install
+npm update
 ```
 
 ## Code Example
 
-### Prod
-```
+### PROD
+
+```base
 npm start
 ```
 
-### Local
-```
-nodemon app.js
+### LOCAL DEV
+
+```base
+npm run-script dev
 ```
 
 ## API Reference
 
-```
-curl --location --request GET "http://localhost:8080/api/geoip?ipaddress=8.8.4.4"
+```bash
+curl --location --request GET "https://ip2geoapp.com/api/geoip?ipaddress=8.8.4.4"
 ```
 
+```bash
+curl --location --request POST "http://ip2geoapp.com/api/geoip" --header "Content-Type: application/json" --data-raw "{
+    \"ipaddress\": \"1.1.1.1\"
+}"
 ```
-curl --location --request POST "http://localhost:8080/api/geoip" --header 'Content-Type: application/json' --data-raw '{
-    "ipaddress": "1.1.1.1"
-}'
+
+## Tests
+
+```base
+npm test
 ```
 
 ## License
 
-Please see the [license file](https://github.com/jadiagaurang/mmdb-geoip-node-express/blob/main/LICENSE) for more information.
+Please see the [license file](https://github.com/jadiagaurang/IP2GeoApp/blob/main/LICENSE) for more information.

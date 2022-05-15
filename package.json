@@ -1,19 +1,49 @@
 {
-  "name": "mmdb-geoip-node-express",
+  "name": "ip2geoapp",
   "version": "1.0.0",
-  "description": "An Application to get geographic data from an IP Address",
+  "description": "IP2Geo is an open-source app to get the Geolocation (Latitude and Longitude) from an IP Address using MaxMind GeoIP2 database.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app",
-    "start": "node app",
-    "test": "mocha tests/*.js --exit"
+    "dev": "nodemon app dev",
+    "start": "node app prod",
+    "test": "mocha --timeout 90000 tests/*.js --exit"
+  },
+  "engines": {
+    "node": "16.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jadiagaurang/IP2GeoApp.git"
+  },
+  "keywords": [
+    "IP2Geo",
+    "IP2Geolocation",
+    "IP2LatLng",
+    "IP2LatitudeandLongitude",
+    "MaxMind",
+    "GeoIP",
+    "GeoIP2",
+    "IPInfo",
+    "GeoLite2"
+  ],
+  "author": "Gaurang Jadia",
+  "private": false,
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jadiagaurang/IP2GeoApp/issues"
+  },
+  "homepage": "https://github.com/jadiagaurang/IP2GeoApp#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "supertest": "^6.2.3"
   },
   "dependencies": {
-    "@maxmind/geoip2-node": "^2.2.0",
+    "@maxmind/geoip2-node": "^3.4.0",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.0",
-    "debug": "^2.2.0",
-    "dotenv": "^8.2.0",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "ip6addr": "^0.2.3",
@@ -21,25 +51,5 @@
     "morgan": "^1.7.0",
     "serve-favicon": "^2.3.0",
     "uuid": "^8.3.2"
-  },
-  "engines": {
-    "node": "16.14.0"
-  },
-  "keywords": [
-    "MaxMind",
-    "GeoIP",
-    "GeoIP2",
-    "IPInfo",
-    "GeoLite2",
-    "Free"
-  ],
-  "author": {
-    "name": "Gaurang Jadia"
-  },
-  "private": false,
-  "license": "UNLICENSED",
-  "devDependencies": {
-    "mocha": "^8.3.0",
-    "supertest": "^6.1.3"
   }
 }
