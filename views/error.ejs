@@ -1,25 +1,26 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html lang="en" id="geoip2" class="geoip2">
-	<head id="head" runat="server">
-    <%- include('./partials/head'); %>
-  </head>
+<html lang="en" id="ip2geoapp" class="ip2geoapp">
+    <head id="head">
+        <%- include("./partials/head"); %>
+    </head>
     <body>
-      <form id="form" runat="server">
-        <%- include('./partials/header'); %>
+        <form id="form">
+        <%- include("./partials/header"); %>
         <div class="center-block">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <h1><%=error.status%> <%=message%></h1>
-              </div>
-              <div class="col-md-12">
-                <pre><%=error.stack%></pre>
-              </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1><%=error.status%> <%=message%></h1>
+                    </div>
+
+                    <div class="col-md-12">
+                        <pre><%=error.stack%></pre>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <%- include('./partials/footnote'); %>
-      </form>
+        <%- include("./partials/footnote"); %>
+        </form>
     </body>
 </html>

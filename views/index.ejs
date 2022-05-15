@@ -1,34 +1,36 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html lang="en" id="geoip2" class="geoip2">
-	<head id="head" runat="server">
-    <%- include('./partials/head'); %>
-  </head>
+<html lang="en" id="screenshotcrew" class="screenshotcrew">
+    <head id="head">
+        <%- include("./partials/head"); %>
+    </head>
     <body>
-      <form id="form" runat="server">
-        <%- include('./partials/header'); %>
+      <form id="form">
+        <%- include("./partials/header"); %>
         <div class="center-block">
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-                <h1>Search</h1>
+                <h1 title="Screenshot as a service">Enter any IP Address</h1>
               </div>
               <div class="col-md-12">
-                <div class="input-group">
-                  <div class="wrapper">
-                    <input type="text" class="form-control input-lg" placeholder="1.1.1.1" title="IP Address" />
-                    <div class="controls">
-                      <button>Search</button>
-                    </div>
-                  </div>
+                <div class="input-group input-group-lg">
+                  <input type="text" class="form-control" placeholder="e.g. 1.1.1.1" aria-describedby="sizing-addon1">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" title="Convert an IP address to Geolocation">Go!</button>
+                  </span>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="container-fluid full-width">
             <div class="result hide">
-              <div class="row">
+              <div class="row row-no-gutter">
                   <div class="col-md-12">
-                    <h1>Result</h1>
-                    <pre id="json"></pre>
+                    <h2 class="hide">Result</h2>
+                    <div class="mapWrapper">
+                      
+                    </div>
                   </div>
               </div>
             </div>

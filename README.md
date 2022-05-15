@@ -1,9 +1,8 @@
 # IP2GeoApp
 
-[![Build Status](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express.svg?branch=main)](https://www.travis-ci.com/jadiagaurang/mmdb-geoip-node-express)
-[![Node.js CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/node.js.yml)
-[![Docker Image CI](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jadiagaurang/mmdb-geoip-node-express/actions/workflows/docker-image.yml)
-[![Docker pulls](https://img.shields.io/docker/pulls/jadiagaurang/mmdb-geoip-node-express.svg?logo=docker)](https://hub.docker.com/r/jadiagaurang/mmdb-geoip-node-express/)
+[![Node.js CI](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/node.js.yml)
+[![Docker Image CI](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/docker-image.yml)
+[![Docker pulls](https://img.shields.io/docker/pulls/jadiagaurang/ip2geo-app.svg?logo=docker)](https://hub.docker.com/r/jadiagaurang/ip2geo-app/)
 
 IP2Geo is an open-source app to get the Geolocation (Latitude and Longitude) from an IP Address using MaxMind's free [GeoLite2 databases](https://dev.maxmind.com/geoip/geoip2/geolite2/).
 
