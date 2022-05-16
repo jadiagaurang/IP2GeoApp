@@ -35,16 +35,16 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout security/private.key
 npm start
 ```
 
-### LOCAL DEV
+### Local/Develop
 
 ```base
 npm run-script dev
 ```
 
-### DOCKER CONTAINER
+### Docker Container
 
 ```base
-docker pull jadiagaurang/ip2geo-app \
+docker pull jadiagaurang/ip2geo-app
 docker run -d -p 80:80 jadiagaurang/ip2geo-app
 ```
 
