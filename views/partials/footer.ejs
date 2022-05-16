@@ -51,24 +51,13 @@
                 success:function(data) {
                     var lng = data.city.location.longitude;
                     var lat = data.city.location.latitude;
-                    console.log(lng, lat);
-
-                    /*
-                    var layer = new ol.layer.Vector({
-                        source: new ol.source.Vector({
-                            features: [
-                                new ol.Feature({
-                                    geometry: new ol.geom.Point(ol.proj.fromLonLat([data.city.location.longitude, data.city.location.latitude]))
-                                })
-                            ]
-                        })
+                    
+                    // Collect Result in a array to render as a List!
+                    window.arrayMarker.push({
+                        "longitude": lng, 
+                        "latitude": lat,
+                        "data": data
                     });
-                    map.addLayer(layer);
-                    map.getView().fit(layer.getSource().getExtent(), {
-                        size: map.getSize(),
-                        maxZoom: 13
-                    });
-                    */
 
                     var vectorLayer = new ol.layer.Vector({
                         target: "points",
@@ -78,11 +67,11 @@
                                 anchor: [0.5, 0.5],
                                 anchorXUnits: "fraction",
                                 anchorYUnits: "fraction",
-                                src: "http://maps.google.com/mapfiles/markerA.png"
+                                src: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red" + window.arrayMarker.length + ".png"
                             })
                         })
                     });
-                    map.addLayer(vectorLayer);
+                    window.map.addLayer(vectorLayer);
 
                     var source = vectorLayer.getSource();
                     var pointFeature = new ol.Feature({
@@ -90,13 +79,12 @@
                     });
                     source.addFeature(pointFeature);
 
-                    map.getView().fit(vectorLayer.getSource().getExtent(), {
+                    window.map.getView().fit(vectorLayer.getSource().getExtent(), {
                         size: map.getSize(),
                         maxZoom: 13
                     });
                 },
                 error: function () {
-
                 },
                 complete: function () {
                     window.spinner.stop();
@@ -112,6 +100,7 @@
     };
 
     $(document).ready(function() {
+        window.arrayMarker = [];
         window.map = new ol.Map({
             target: "map",
             layers: [
