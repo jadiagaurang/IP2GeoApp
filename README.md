@@ -41,6 +41,13 @@ npm start
 npm run-script dev
 ```
 
+### DOCKER CONTAINER
+
+```base
+docker pull jadiagaurang/ip2geo-app \
+docker run -d -p 80:80 jadiagaurang/ip2geo-app
+```
+
 ## API Reference
 
 ```bash
