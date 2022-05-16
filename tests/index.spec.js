@@ -1,4 +1,7 @@
-'use strict';
+#! /usr/bin/env node
+
+"use strict";
+
 const supertest = require("supertest");
 const assert = require('assert');
 const app = require("../app");

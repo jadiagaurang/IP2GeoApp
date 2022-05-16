@@ -9,8 +9,8 @@ var meLogger = winston(process.env.LOG_LEVEL);
 
 /* GET home page. */
 router.get("/", function (req, res) {
-    meLogger.info(req.headers["x-forwarded-for"]);
-    meLogger.info(req.socket.remoteAddress);
+    meLogger.info("x-forwarded-for: " + req.headers["x-forwarded-for"]);
+    meLogger.info("remoteAddress: " + req.socket.remoteAddress);
     
     res.render("index", { 
         title: "Convert IP Address to Geolocation Data",

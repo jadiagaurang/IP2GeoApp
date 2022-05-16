@@ -1,28 +1,22 @@
-'use strict';
+#! /usr/bin/env node
+
+"use strict";
+
 const Memcached = require("memcached");
 
-//START: Utility Functions
 module.exports = class Utility {
-	static isInvalidRequests(req) {
-		if(req.url === "/favicon.ico" || Utility.isBlank(req.url)) {
-			return true;
-		}
-	
-		return false;
-	}
-
-	static isBlank (obj) {
+	static isBlank = (obj) => {
 		return (!obj || obj === "");
 	}
 
-	static async getCachedResult (theIP) {
+	static getCachedResult = async (strKey) => {
 		return new Promise((resolve, reject) => {
 			var memcacheHost = process.env.SERVER_MEMCACHE_HOST;
 			var memcachePort = process.env.SERVER_MEMCACHE_PORT;
 
 			if (!Utility.isBlank(memcacheHost) && !Utility.isBlank(memcachePort)) {
 				//Make CacheKey
-				var varCacheKey = "Host=" + process.env.SERVER_HOST + "&Method=doMMGeoIP2Bot&IP=" + theIP;
+				var varCacheKey = "Host=" + process.env.SERVER_HOST + "&Method=getCachedResult&strKey=" + strKey;
 
 				//Set up Memcache Client
 				var dcOptions = {
@@ -46,14 +40,14 @@ module.exports = class Utility {
 		});
 	}
 
-	static async setCachedResult (theIP, data) {
+	static setCachedResult = async (strKey, data) => {
 		return new Promise((resolve, reject) => {
 			var memcacheHost = process.env.SERVER_MEMCACHE_HOST;
 			var memcachePort = process.env.SERVER_MEMCACHE_PORT;
 
 			if (!Utility.isBlank(memcacheHost) && !Utility.isBlank(memcachePort)) {
 				//Make CacheKey
-				var varCacheKey = "Host=" + process.env.SERVER_HOST + "&Method=doMMGeoIP2Bot&IP=" + theIP;
+				var varCacheKey = "Host=" + process.env.SERVER_HOST + "&Method=setCachedResult&strKey=" + strKey;
 
 				//Set up Memcache Client
 				var dcOptions = {
@@ -76,10 +70,9 @@ module.exports = class Utility {
 		});
 	}
 
-	delay(timeout) {
+	static delay = (timeout) => {
 		return new Promise((resolve) => {
 			setTimeout(resolve, timeout);
 		});
 	}
 }
-//END: Utility Functions

@@ -1,11 +1,14 @@
-﻿'use strict';
-const debug = require('debug');
-const express = require('express');
-var router = express.Router();
+﻿"use strict";
 
+// External Packages
+const express = require("express");
+var router = express.Router();
+// Internal Modules
+const winston = require("../src/logger").winston;
 const ip6addr = require("ip6addr");
 const MMGeoIP2Bot = require("../src/geoip.js");
 const util = require("../src/utility.js");
+var meLogger = winston(process.env.LOG_LEVEL);
 
 /* GET */
 router.get("/geoip", function (req, res) {
@@ -19,13 +22,6 @@ router.post("/geoip", function (req, res) {
 //Routing Callback
 function doMMGeoIP2Bot (req, res) {
     try {
-        //Handling invalid request
-      	if(util.isInvalidRequests(req)) {
-            res.writeHead(204);
-            res.end();
-            return;
-        }
-
         //Get IPAddress from the Request
         var varIP = req.query.ipaddress;    //Try to get it from Query String
         if (util.isBlank(varIP)) {
@@ -33,7 +29,7 @@ function doMMGeoIP2Bot (req, res) {
         }
 
         if (util.isBlank(varIP)) {
-            throw "Invalid IP";
+            throw new Error("Invalid IP");
         }
 
         try {
@@ -41,48 +37,51 @@ function doMMGeoIP2Bot (req, res) {
                 var objIP = ip6addr.parse(varIP);
                 var theIP = objIP.toString();
 
+                let outputResponse = {};
                 var varCachedResult = await util.getCachedResult(theIP);
 
                 if (varCachedResult != null) {
                     //Response Back from the Cache
-                    var outputResponse = JSON.stringify(varCachedResult);
+                    outputResponse = JSON.stringify(varCachedResult);
 
                     //Set Response Header for Debugging
                     res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "HIT" });
                     res.write(outputResponse);
                     res.end();
-
-                    return;
                 }
                 else {
                     try {
                         //GeoIPBot Module Object
                         var objMMGeoIP2Bot = new MMGeoIP2Bot(theIP);
 
-                        let varASN = await objMMGeoIP2Bot.getASN();
-                        let varCity = await objMMGeoIP2Bot.getCity();
-                        let varCountry = await objMMGeoIP2Bot.getCountry();
+                        Promise.all([objMMGeoIP2Bot.getASN(), objMMGeoIP2Bot.getCity(), objMMGeoIP2Bot.getCountry()]).then(function(results) {
+                            let varASN = results[0];
+                            let varCity = results[1];
+                            let varCountry = results[2];
 
-                        var outputResponse = {
-                            "asn": varASN,
-                            "city": varCity,
-                            "country": varCountry
-                        };
+                            outputResponse = {
+                                "asn": varASN,
+                                "city": varCity,
+                                "country": varCountry
+                            };
 
-                        var blnResult = await util.setCachedResult(theIP, outputResponse);
-                        if (!blnResult) {
-                            debug("MMGeoIP2Bot MemcachedClient Set Exception at " + (new Date()));
-                        }
+                            (async() => {
+                                var blnResult = await util.setCachedResult(theIP, outputResponse);
+                                if (!blnResult) {
+                                    meLogger.info("MMGeoIP2Bot MemcachedClient Set Exception at " + (new Date()));
+                                }
+                            })();
+                            
+                            //Set Response ContentType
+                            res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "MISS" });
 
-                        //Set Response ContentType
-                        res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "MISS" });
-
-                        //Write Output
-                        res.write(JSON.stringify(outputResponse));
-                        res.end();
+                            //Write Output
+                            res.write(JSON.stringify(outputResponse));
+                            res.end();
+                        });
                     }
                     catch(innerException) {
-                        debug("MMGeoIP2Bot Controller Exception: " + innerException + " at " + (new Date()));
+                        meLogger.error("MMGeoIP2Bot Controller Exception: " + innerException + " at " + (new Date()));
 
                         //Set Response ContentType
                         res.writeHead(500, {"Content-Type": "application/json"});
@@ -100,13 +99,13 @@ function doMMGeoIP2Bot (req, res) {
             })();
         }
         catch (ex) {
-            debug(ex);
+            meLogger.error(ex);
 
             throw ex;
         }
     }
     catch (outerException) {
-        debug("MMGeoIP2Bot Controller Exception: " + outerException + " at " + (new Date()));
+        meLogger.error("MMGeoIP2Bot Controller Exception: " + outerException + " at " + (new Date()));
 
         res.writeHead(500, {"Content-Type": "application/json"});
         res.write(JSON.stringify({
