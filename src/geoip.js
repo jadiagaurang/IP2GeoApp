@@ -6,17 +6,29 @@
 const fs = require("fs");
 const path = require("path");
 const Reader = require("@maxmind/geoip2-node").Reader;
+const _ = require("underscore");
+
 // Internal Modules
 const winston = require("./logger").winston;
 
 module.exports = class MMGeoIP2Bot {
+	defaultOptions = {
+	}
+
 	//Default Constructor
-	constructor(varIP) {
-		this.varMMDBPath = path.dirname(fs.realpathSync(__filename));
-		this.IPAddress = varIP;
+	constructor(varIP, options) {
+		var me = this;
+		
+		me.options = _.extend({}, me.defaultOptions, options);
+		me.logger = winston(process.env.LOG_LEVEL);
+		
+		me.varMMDBPath = path.dirname(fs.realpathSync(__filename));
+		me.IPAddress = varIP;
 	}
 
   	getASN = async() => {
+		var me = this;
+
 		return new Promise((resolve, reject) => {
 			let dbASN = path.join(this.varMMDBPath, "../db/GeoLite2-ASN.mmdb");
 			Reader.open(dbASN).then(reader => {
@@ -25,17 +37,19 @@ module.exports = class MMGeoIP2Bot {
 					resolve(response);
 				}
 				catch (ex) {
-					console.error(ex);
-					reject(ex);
+					me.logger.error(ex);
+					resolve({});
 				}
 			}).catch(function(ex) {
-				winston.error(ex);
-				reject(ex);
+				me.logger.error(ex);
+				resolve({});
 			});
 		});
 	}
 
 	getCity = async() => {
+		var me = this;
+
 		return new Promise((resolve, reject) => {
 			let dbCity = path.join(this.varMMDBPath, "../db/GeoLite2-City.mmdb");
 			Reader.open(dbCity).then(reader => {
@@ -44,17 +58,19 @@ module.exports = class MMGeoIP2Bot {
 					resolve(response);
 				}
 				catch (ex) {
-					console.error(ex);
-					reject(ex);
+					me.logger.error(ex);
+					resolve({});
 				}
 			}).catch(function(ex) {
-				winston.error(ex);
-				reject(ex);
+				me.logger.error(ex);
+				resolve({});
 			});
 		});
 	}
 
 	getCountry = async() => {
+		var me = this;
+
 		return new Promise((resolve, reject) => {			
 			let dbCountry = path.join(this.varMMDBPath, "../db/GeoLite2-Country.mmdb");
 			Reader.open(dbCountry).then(reader => {
@@ -63,12 +79,13 @@ module.exports = class MMGeoIP2Bot {
 					resolve(response);
 				}
 				catch (ex) {
-					console.error(ex);
-					reject(ex);
+					me.logger.error(ex);
+					resolve({});
 				}
 			}).catch(function(ex) {
-				winston.error(ex);
-				reject(ex);
+				console.log(me.logger);
+				me.logger.error(ex);
+				resolve({});
 			});
 		});
 	}

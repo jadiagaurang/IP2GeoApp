@@ -20,7 +20,7 @@ router.post("/geoip", function (req, res) {
 });
 
 //Routing Callback
-function doMMGeoIP2Bot (req, res) {
+const doMMGeoIP2Bot = async (req, res) => {
     try {
         //Get IPAddress from the Request
         var varIP = req.query.ipaddress;    //Try to get it from Query String
@@ -33,70 +33,78 @@ function doMMGeoIP2Bot (req, res) {
         }
 
         try {
-            (async() => {
-                var objIP = ip6addr.parse(varIP);
-                var theIP = objIP.toString();
+            var objIP = ip6addr.parse(varIP);
+            var theIP = objIP.toString();
 
-                let outputResponse = {};
-                var varCachedResult = await util.getCachedResult(theIP);
+            let outputResponse = {};
+            var varCachedResult = await util.getCachedResult(theIP);
 
-                if (varCachedResult != null) {
-                    //Response Back from the Cache
-                    outputResponse = JSON.stringify(varCachedResult);
+            if (varCachedResult != null) {
+                //Response Back from the Cache
+                outputResponse = JSON.stringify(varCachedResult);
 
-                    //Set Response Header for Debugging
-                    res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "HIT" });
-                    res.write(outputResponse);
-                    res.end();
-                }
-                else {
-                    try {
-                        //GeoIPBot Module Object
-                        var objMMGeoIP2Bot = new MMGeoIP2Bot(theIP);
+                //Set Response Header for Debugging
+                res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "HIT" });
+                res.write(outputResponse);
+                res.end();
+            }
+            else {
+                try {
+                    //GeoIPBot Module Object
+                    var objMMGeoIP2Bot = new MMGeoIP2Bot(theIP);
 
-                        Promise.all([objMMGeoIP2Bot.getASN(), objMMGeoIP2Bot.getCity(), objMMGeoIP2Bot.getCountry()]).then(function(results) {
-                            let varASN = results[0];
-                            let varCity = results[1];
-                            let varCountry = results[2];
+                    Promise.all([
+                        objMMGeoIP2Bot.getASN(), 
+                        objMMGeoIP2Bot.getCity(), 
+                        objMMGeoIP2Bot.getCountry()]
+                    ).then(function(results) {
+                        let objASN = results[0];
+                        if (!util.isBlank(objASN)) {
+                            outputResponse["asn"] = objASN;
+                        }
 
-                            outputResponse = {
-                                "asn": varASN,
-                                "city": varCity,
-                                "country": varCountry
-                            };
+                        let objCity = results[1];
+                        if (!util.isBlank(objCity)) {
+                            outputResponse["city"] = objCity;
+                        }
 
-                            (async() => {
-                                var blnResult = await util.setCachedResult(theIP, outputResponse);
-                                if (!blnResult) {
-                                    meLogger.info("MMGeoIP2Bot MemcachedClient Set Exception at " + (new Date()));
-                                }
-                            })();
-                            
-                            //Set Response ContentType
-                            res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "MISS" });
-
-                            //Write Output
-                            res.write(JSON.stringify(outputResponse));
-                            res.end();
-                        });
-                    }
-                    catch(innerException) {
-                        meLogger.error("MMGeoIP2Bot Controller Exception: " + innerException + " at " + (new Date()));
-
+                        let objCountry = results[2];
+                        if (!util.isBlank(objCountry)) {
+                            outputResponse["country"] = objCountry;
+                        }
+                        
+                        //Save to Memcache Async!
+                        (async() => {
+                            var blnResult = await util.setCachedResult(theIP, outputResponse);
+                            if (!blnResult) {
+                                meLogger.info("MMGeoIP2Bot MemcachedClient Set Exception at " + (new Date()));
+                            }
+                        })();
+                        
                         //Set Response ContentType
-                        res.writeHead(500, {"Content-Type": "application/json"});
+                        res.writeHead(200, { "Content-Type": "application/json", "X-Cache": "MISS" });
 
                         //Write Output
-                        res.write(JSON.stringify({
-                            "Status": "ERROR",
-                            "Message": innerException
-                        }));
+                        res.write(JSON.stringify(outputResponse));
                         res.end();
-
-                        return;
-                    }
+                    });
                 }
-            })();
+                catch(innerException) {
+                    meLogger.error("MMGeoIP2Bot Controller Exception: " + innerException + " at " + (new Date()));
+
+                    //Set Response ContentType
+                    res.writeHead(500, {"Content-Type": "application/json"});
+
+                    //Write Output
+                    res.write(JSON.stringify({
+                        "Status": "ERROR",
+                        "Message": innerException
+                    }));
+                    res.end();
+
+                    return;
+                }
+            }
         }
         catch (ex) {
             meLogger.error(ex);
@@ -107,7 +115,7 @@ function doMMGeoIP2Bot (req, res) {
     catch (outerException) {
         meLogger.error("MMGeoIP2Bot Controller Exception: " + outerException + " at " + (new Date()));
 
-        res.writeHead(500, {"Content-Type": "application/json"});
+        res.writeHead(500, { "Content-Type": "application/json" });
         res.write(JSON.stringify({
           "Status": "ERROR",
           "Message": outerException

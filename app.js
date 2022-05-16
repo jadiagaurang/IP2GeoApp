@@ -18,6 +18,7 @@ const { createTerminus } = require("@godaddy/terminus")
 const winston = require("./src/logger").winston;
 const routes = require("./routes/index");
 const geoip = require("./routes/geoip");
+var meLogger = winston(process.env.LOG_LEVEL);
 
 // ExpressJS App Setup
 var app = express();
@@ -105,7 +106,7 @@ const server = http.createServer(app);
 
 // Health Check
 const onSignal = () => {
-    console.log("server is starting cleanup");
+    meLogger.log("server is starting cleanup");
     return Promise.all([
         // your clean logic, like closing database connections
     ]);
@@ -132,7 +133,6 @@ createTerminus(server, {
 
 // ExpressJS Server Setup
 server.listen(app.get("port"), function () {
-    var meLogger = winston(process.env.LOG_LEVEL);
     meLogger.info("Express server listening on port " + server.address().port);
 });
 

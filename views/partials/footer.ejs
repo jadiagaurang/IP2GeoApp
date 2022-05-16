@@ -8,6 +8,13 @@
     const isBlank = (obj) => {
 		return (!obj || obj === "");
     }
+    
+    const showError = () => {
+        $("input").parents().eq(1).addClass("input-error");
+        window.setTimeout(function () {
+            $("input").parents().eq(1).removeClass("input-error");
+        }, 810);
+    }
 
     const loadIP2Geo = (event) => {
         event.preventDefault();
@@ -49,42 +56,50 @@
                     window.spinner = new Spin.Spinner(opts).spin(target);
                 },
                 success:function(data) {
-                    var lng = data.city.location.longitude;
-                    var lat = data.city.location.latitude;
-                    
-                    // Collect Result in a array to render as a List!
-                    window.arrayMarker.push({
-                        "longitude": lng, 
-                        "latitude": lat,
-                        "data": data
-                    });
+                    if (!isBlank(data) && !isBlank(data.city) && 
+                        !$.isEmptyObject(data) && !$.isEmptyObject(data.city)) {
 
-                    var vectorLayer = new ol.layer.Vector({
-                        target: "points",
-                        source: new ol.source.Vector(),
-                        style: new ol.style.Style({
-                            image: new ol.style.Icon({
-                                anchor: [0.5, 0.5],
-                                anchorXUnits: "fraction",
-                                anchorYUnits: "fraction",
-                                src: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red" + window.arrayMarker.length + ".png"
+                        var lng = data.city.location.longitude;
+                        var lat = data.city.location.latitude;
+                        
+                        // Collect Result in a array to render as a List!
+                        window.arrayMarker.push({
+                            "longitude": lng, 
+                            "latitude": lat,
+                            "data": data
+                        });
+
+                        var vectorLayer = new ol.layer.Vector({
+                            target: "points",
+                            source: new ol.source.Vector(),
+                            style: new ol.style.Style({
+                                image: new ol.style.Icon({
+                                    anchor: [0.5, 0.5],
+                                    anchorXUnits: "fraction",
+                                    anchorYUnits: "fraction",
+                                    src: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red" + window.arrayMarker.length + ".png"
+                                })
                             })
-                        })
-                    });
-                    window.map.addLayer(vectorLayer);
+                        });
+                        window.map.addLayer(vectorLayer);
 
-                    var source = vectorLayer.getSource();
-                    var pointFeature = new ol.Feature({
-                        geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
-                    });
-                    source.addFeature(pointFeature);
+                        var source = vectorLayer.getSource();
+                        var pointFeature = new ol.Feature({
+                            geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
+                        });
+                        source.addFeature(pointFeature);
 
-                    window.map.getView().fit(vectorLayer.getSource().getExtent(), {
-                        size: map.getSize(),
-                        maxZoom: 13
-                    });
+                        window.map.getView().fit(vectorLayer.getSource().getExtent(), {
+                            size: map.getSize(),
+                            maxZoom: 13
+                        });
+                    }
+                    else {
+                        showError();
+                    }
                 },
                 error: function () {
+                    showError();
                 },
                 complete: function () {
                     window.spinner.stop();
@@ -92,10 +107,7 @@
             });
         }
         else {
-            $("input").parents().eq(1).addClass("input-error");
-            window.setTimeout(function () {
-                $("input").parents().eq(1).removeClass("input-error");
-            }, 810);
+            showError();
         }
     };
 
@@ -113,9 +125,6 @@
                 zoom: 0
             })
         });
-        //if (!isBlank($("input").val())) {
-            //loadIP2Geo();
-        //}
 
         $("button").bind("click", loadIP2Geo);
     });
