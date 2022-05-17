@@ -116,6 +116,11 @@ body > .container {
     margin-top: 20px;
 }
 
+pre, code {
+  font-size: 80%;
+  height: calc(100vh - 278px);
+}
+
 .mapWrapper {
   width: 100%;
   height: calc(100vh - 278px);

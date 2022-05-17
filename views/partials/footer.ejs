@@ -2,6 +2,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js" integrity="sha512-GoORoNnxst42zE3rYPj4bNBm0Q6ZRXKNH2D9nEmNvVF/z24ywVnijAWVi/09iBiVDQVf3UlZHpzhAJIdd9BXqw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-beautify.min.js" integrity="sha512-QfDSPBb1bUxUj/XQP0UNmQLsHy5LMKOzk9IAuUYGJebOFrfYi5csZsrUaPbgrsppiKY3kPv+zGe/kaS6yUcmHg==" crossorigin="anonymous"></script>
 <script src="https://spin.js.org/spin.umd.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
@@ -56,6 +58,8 @@
                     window.spinner = new Spin.Spinner(opts).spin(target);
                 },
                 success:function(data) {
+                    window.JSONEditor.setValue(JSON.stringify(data, undefined, 2));
+
                     if (!isBlank(data) && !isBlank(data.city) && 
                         !$.isEmptyObject(data) && !$.isEmptyObject(data.city)) {
 
@@ -112,6 +116,8 @@
     };
 
     $(document).ready(function() {
+        $("button").bind("click", loadIP2Geo);
+
         window.arrayMarker = [];
         window.map = new ol.Map({
             target: "map",
@@ -126,6 +132,18 @@
             })
         });
 
-        $("button").bind("click", loadIP2Geo);
+        require(["ace/ace"], function (ace) {
+            ace.config.set("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12");
+            window.JSONEditor = ace.edit("json");
+            window.JSONEditor.session.setMode("ace/mode/json");
+            window.JSONEditor.setOptions({
+                useWorker: true,
+                showPrintMargin: false,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                readOnly: true
+            });
+            window.JSONEditor.setValue(JSON.stringify({}, undefined, 2));
+        });
     });
 </script>
