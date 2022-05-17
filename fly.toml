@@ -1,4 +1,4 @@
-# fly.toml file generated for ip2geo-app on 2022-05-16T16:50:55-07:00
+# fly.toml file generated for ip2geo-app on 2022-05-17T16:31:48-07:00
 
 app = "ip2geo-app"
 
@@ -13,7 +13,7 @@ processes = []
   auto_rollback = true
 
 [[services]]
-  http_checks = []
+  #http_checks = []
   internal_port = 80
   processes = ["app"]
   protocol = "tcp"
@@ -38,3 +38,14 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+  
+  [[services.http_checks]]
+    interval = "30s"
+    grace_period = "15s"
+    method = "get"
+    path = "/healthcheck"
+    protocol = "http"
+    restart_limit = 0
+    timeout = "10s"
+    tls_skip_verify = false
+    [services.http_checks.headers]
