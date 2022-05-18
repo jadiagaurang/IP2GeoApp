@@ -137,6 +137,9 @@
             window.JSONEditor = ace.edit("json");
             window.JSONEditor.session.setMode("ace/mode/json");
             window.JSONEditor.setOptions({
+                theme: "ace/theme/pastel_on_dark",
+                fontSize: 13,
+                showGutter: true,
                 useWorker: true,
                 showPrintMargin: false,
                 enableBasicAutocompletion: true,
