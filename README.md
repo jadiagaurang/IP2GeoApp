@@ -1,6 +1,7 @@
 # IP2GeoApp
 
 [![Node.js CI](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/node.js.yml/badge.svg)](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/node.js.yml)
+[![Fly Deploy](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/fly-deploy.yml)
 [![Docker Image CI](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/docker-image.yml/badge.svg)](https://github.com/jadiagaurang/IP2GeoApp/actions/workflows/docker-image.yml)
 [![Docker pulls](https://img.shields.io/docker/pulls/jadiagaurang/ip2geo-app.svg?logo=docker)](https://hub.docker.com/r/jadiagaurang/ip2geo-app/)
 
